@@ -1,0 +1,36 @@
+---
+- name: Add postgres Repo for ubuntu 20.04
+  apt_repository: 
+    repo: deb http://apt.postgresql.org/pub/repos/apt focal-pgdg main
+    state: present
+    update_cache: no
+
+- name: Add official PG public  key key
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+
+- name: Install PostgreSql server
+  apt:
+    name:
+      - postgresql-12
+      - postgresql-client-12
+      - postgresql-server-dev-12
+      - libpq-dev
+      - python3-psycopg2 
+    state: present
+    update_cache: yes
+
+- name: Create Database User
+  postgresql_user:
+    name: "{{db_user}}"
+    password: "{{db_pass}}"
+  become: true
+  become_user: postgres
+
+- name: Create Database Instance
+  postgresql_db: 
+    name: "{{db_name}}"
+    owner: "{{db_user}}"
+  become: true
+  become_user: postgres

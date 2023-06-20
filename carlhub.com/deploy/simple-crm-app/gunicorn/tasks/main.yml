@@ -1,0 +1,26 @@
+- name: Create main dirs for {{etcdir}}
+  file:
+    path: "{{etcdir}}"
+    state: directory
+
+- name: Copy Gunicorn configs
+  template:
+    src: gunicorn.conf.py
+    dest: "{{etcdir}}/gunicorn.conf.py"
+
+- name: Copy Gunicorn env
+  template:
+    src: gunicorn.env
+    dest: "{{etcdir}}/gunicorn.env"
+
+- name: Copy Gunicorn system unit
+  template:
+    src: carlhub.service
+    dest: "/etc/systemd/system/carlhub.service"
+
+- name: Restart carlhub Gunicorn service
+  systemd:
+    name: carlhub
+    state: restarted
+    daemon_reload: yes
+    enabled: yes

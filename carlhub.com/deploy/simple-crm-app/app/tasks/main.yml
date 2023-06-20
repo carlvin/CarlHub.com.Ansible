@@ -1,0 +1,58 @@
+---
+- name: Clone Django project repository
+  git:
+    repo: "https://github.com/carlvin/simple_crm_prod_base.git"
+    dest: "/home/xorb/simple-crm-app"
+    version: main
+  become_user: xorb
+
+- name: Install production.py
+  template: 
+    src: production.py
+    dest: "/home/xorb/simple-crm-app/config/settings/production.py"
+  become_user: xorb
+
+- name: Create Virtual Enviroment and run pip install -r requirements.txt
+  ansible.builtin.pip:
+    virtualenv: "/home/xorb/simple-crm-app/venv"
+    requirements: "/home/xorb/simple-crm-app/requirements.txt"
+    #virtualenv_command: "/usr/bin/python3.8 -m venv"
+  become: true
+  become_user: xorb
+
+- name: Run Migrate
+  django_manage:
+    command: migrate
+    app_path: "{{projdir}}"
+    settings: config.settings.production
+    virtualenv: "{{projdir}}/venv"
+  become_user: xorb
+  environment: 
+    SECRET_KEY: "{{secret_key}}"
+    DB_NAME: "{{db_name}}"
+    DB_USER: "{{db_user}}"
+    DB_PASS: "{{db_pass}}"
+    # AWS_STORAGE_BUCKET_NAME: "{{aws_storage_bucket_name}}"
+    # AWS_S3_REGION_NAME: "{{aws_s3_region_name}}"
+    # AWS_ACCESS_KEY_ID: "{{aws_access_key_id}}"
+    # AWS_SECRET_ACCESS_KEY: "{{aws_secret_access_key}}"
+    # AWS_S3_CUSTOM_DOMAIN: "{{aws_custom_domain}}"
+
+- name: Run collectstatics
+  django_manage:
+    command: collectstatic
+    app_path: "{{projdir}}"
+    settings: config.settings.production
+    virtualenv: "{{projdir}}/venv"
+  become_user: xorb
+  environment: 
+    SECRET_KEY: "{{secret_key}}"
+    DB_NAME: "{{db_name}}"
+    DB_USER: "{{db_user}}"
+    DB_PASS: "{{db_pass}}"
+    AWS_STORAGE_BUCKET_NAME: "{{aws_storage_bucket_name}}"
+    AWS_S3_REGION_NAME: "{{aws_s3_region_name}}"
+    AWS_ACCESS_KEY_ID: "{{aws_access_key_id}}"
+    AWS_SECRET_ACCESS_KEY: "{{aws_secret_access_key}}"
+    AWS_S3_CUSTOM_DOMAIN: "{{aws_custom_domain}}"
+

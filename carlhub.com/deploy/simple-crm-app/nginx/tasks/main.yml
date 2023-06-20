@@ -1,0 +1,26 @@
+---
+- name: Install nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Deactivate the default nginx from sites-available
+  file:
+    path: /etc/nginx/sites-available/default
+    state: absent
+
+- name: copy carlhub.com
+  template:
+    src: carlhub.com
+    dest: /etc/nginx/sites-available/
+
+- name: Activate carlhub.com site
+  file:
+    src: /etc/nginx/sites-available/carlhub.com
+    dest: /etc/nginx/sites-enabled/carlhub.com
+    state: link
+
+- name: Restart nginx.service
+  systemd:
+    state: restarted
+    name: nginx

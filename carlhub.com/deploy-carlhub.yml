@@ -1,0 +1,23 @@
+- hosts: carl
+  gather_facts: no
+  become: True
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    gunicorn_port: 8000
+    db_user: "os.environ['DB_USER']"
+    # db_name: "database4"
+    db_pass: "os.environ['DB_PASS']"  
+    projdir: "/home/xorb/simple-crm-app"
+    etcdir: "/etc/carlhub"
+    db_name: "os.environ['DB_NAME']"
+    secret_key: "os.environ['SECRET_KEY']"
+    
+  roles:
+    - role: 'deploy/simple-crm-app/nginx'
+      tag: ['nginx']
+    - role: 'deploy/simple-crm-app/db'
+      tags: ['db']
+    - role: 'deploy/simple-crm-app/app'
+      tags: ['app']
+    - role: 'deploy/simple-crm-app/gunicorn'
+      tags: ['gunicorn']
