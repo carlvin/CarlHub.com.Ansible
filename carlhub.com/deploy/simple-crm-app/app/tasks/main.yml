@@ -19,6 +19,11 @@
     virtualenv_command: "/usr/bin/python3.8 -m venv"
   become_user: xorb
       
+- name: Install Middleware.py for django htmx refresh
+  template: 
+    src: middleware.py
+    dest: "{{ projdir }}/venv/lib/python3.8/site-packages/django_htmx_refresh/middleware.py"
+  become_user: xorb
 
 - name: Run Migrate
   django_manage:
