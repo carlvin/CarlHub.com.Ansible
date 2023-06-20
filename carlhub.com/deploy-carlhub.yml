@@ -17,7 +17,8 @@
       tag: ['nginx']
     - role: 'deploy/simple-crm-app/db'
       tags: ['db']
-    - role: 'deploy/simple-crm-app/app'
-      tags: ['app']
     - role: 'deploy/simple-crm-app/gunicorn'
       tags: ['gunicorn']
+    - role: 'deploy/simple-crm-app/app'
+      tags: ['app']
+    

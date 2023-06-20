@@ -3,7 +3,7 @@ server {
     server_name carlhub.com;
 
     location /static/ {
-	alias {{projdir}}/static/;
+	alias /home/xorb/static/;
     }
 
     location / {
