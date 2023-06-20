@@ -16,9 +16,9 @@
   ansible.builtin.pip:
     virtualenv: "/home/xorb/simple-crm-app/venv"
     requirements: "/home/xorb/simple-crm-app/requirements.txt"
-    #virtualenv_command: "/usr/bin/python3.8 -m venv"
-  become: true
+    virtualenv_command: "/usr/bin/python3.8 -m venv"
   become_user: xorb
+      
 
 - name: Run Migrate
   django_manage:
@@ -50,9 +50,9 @@
     DB_NAME: "{{db_name}}"
     DB_USER: "{{db_user}}"
     DB_PASS: "{{db_pass}}"
-    AWS_STORAGE_BUCKET_NAME: "{{aws_storage_bucket_name}}"
-    AWS_S3_REGION_NAME: "{{aws_s3_region_name}}"
-    AWS_ACCESS_KEY_ID: "{{aws_access_key_id}}"
-    AWS_SECRET_ACCESS_KEY: "{{aws_secret_access_key}}"
-    AWS_S3_CUSTOM_DOMAIN: "{{aws_custom_domain}}"
+    # AWS_STORAGE_BUCKET_NAME: "{{aws_storage_bucket_name}}"
+    # AWS_S3_REGION_NAME: "{{aws_s3_region_name}}"
+    # AWS_ACCESS_KEY_ID: "{{aws_access_key_id}}"
+    # AWS_SECRET_ACCESS_KEY: "{{aws_secret_access_key}}"
+    # AWS_S3_CUSTOM_DOMAIN: "{{aws_custom_domain}}"
 
