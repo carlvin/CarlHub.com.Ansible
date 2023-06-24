@@ -1,9 +1,10 @@
 ---
 - name: Clone Django project repository
   git:
-    repo: "https://github.com/carlvin/simple_crm_prod_base.git"
+    repo: "{{ repoUrl }}"
     dest: "/home/xorb/simple-crm-app"
-    version: main
+    version: "{{repoBranch}}"
+    force: yes
   become_user: xorb
 
 - name: Install production.py

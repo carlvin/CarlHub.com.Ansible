@@ -11,6 +11,8 @@
     etcdir: "/etc/carlhub"
     db_name: "os.environ['DB_NAME']"
     secret_key: "os.environ['SECRET_KEY']"
+    repoUrl: "https://github.com/carlvin/simple_crm_prod_base.git"
+    repoBranch: "inprogress"
     
   roles:
     - role: 'deploy/simple-crm-app/nginx'
