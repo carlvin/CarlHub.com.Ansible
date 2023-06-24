@@ -8,11 +8,6 @@ errorlog = "/var/log/gunicorn/error.log"
 # Sending django output to the error log
 capture_output = True
 umask = 0
-<<<<<<< HEAD
-errorlog = "home/xorb/logs/gunicorn.error"
-accesslog = "home/xorb/logs/gunicorn.access"
-=======
->>>>>>> 3f4ff08ce6c5ccb42a6caa19831f544fec74cc78
 loglevel ="debug"
 user = "xorb"
 group = "xorb"
